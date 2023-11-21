@@ -18,8 +18,8 @@ spec:
         app: flask-demo
     spec:
       containers:
-      - image: tosicky/flask-demoApp:v1
-        name: flask-demoApp
+      - image: tosicky/flask-demo:v1
+        name: flask-demo
         imagePullPolicy: Always
         resources: {}
       imagePullSecrets:
