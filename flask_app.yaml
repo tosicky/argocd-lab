@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: flask-demo
+  name: flask-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: flask-demo
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: flask-demo
+    spec:
+      containers:
+      - image: tosicky/flask-demoApp:v1
+        name: flask-demoApp
+        imagePullPolicy: Always
+        resources: {}
+      imagePullSecrets:
+      - name: argocdcred
+status: {}
