@@ -5,8 +5,6 @@ metadata:
   labels:
     app: flask-demo
   name: flask-demo
-  annotations:
-    notifications.argoproj.io/subscribe.on-sync-succeeded.slack: argocd_deploy
 spec:
   replicas: 1
   selector:
