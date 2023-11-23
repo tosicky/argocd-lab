@@ -47,6 +47,6 @@ spec:
     namespace: default
   project: default 
   source:
-    path: deployment
+    path: notification
     repoURL: https://github.com/tosicky/argocd-lab.git
     targetRevision: HEAD
