@@ -1,0 +1,52 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: argocd-notifications-secret
+stringData:
+  slack-token: <oauth_access_token>
+type: Opaque
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+ name: argocd-notifications-cm
+data:
+  service.slack: |
+    token: $slack-token
+  template.app-sync-status: |
+    message: |
+      Application {{.app.metadata.name}} sync is {{.app.status.sync.status}}.
+      Application details: {{.context.argocdUrl}}/applications/{{.app.metadata.name}}.
+    slack:
+      attachments: |
+        [{
+          "title": "{{.app.metadata.name}}",
+         "title_link": "{{.context.argocdUrl}}/applications/{{.app.metadata.name}}",
+         "color": "#18be52",
+         "fields": [{
+           "title": "Sync Status",
+           "value": "{{.app.status.sync.status}}",
+           "short": true
+         }, {
+           "title": "Repository",
+           "value": "{{.app.spec.source.repoURL}}",
+           "short": true
+         }]
+       }]
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: argocd-lab
+  namespace: argocd
+  annotations:
+    notifications.argoproj.io/subscribe.on-sync-succeeded.slack: argocd_deploy
+spec:
+  destination:
+    name: in-cluster
+    namespace: default
+  project: default 
+  source:
+    path: deployment
+    repoURL: https://github.com/tosicky/argocd-lab.git
+    targetRevision: HEAD
