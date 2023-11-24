@@ -4,7 +4,7 @@ metadata:
   creationTimestamp: null
   labels:
     app: flask-demo
-  name: flask-demo
+  name: flask-app-demo
 spec:
   replicas: 1
   selector:
@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - image: tosicky/flask_demo:v1
-        name: flask-demo
+        name: flask-app-demo
         imagePullPolicy: Always
         resources: {}
       imagePullSecrets:
